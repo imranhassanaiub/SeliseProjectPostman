@@ -1,0 +1,123 @@
+{
+	"info": {
+		"_postman_id": "9f4ce04a-54ce-4cf2-831d-8c515cea603d",
+		"name": "OrangeHrm-SELISE",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Post Request",
+			"item": [
+				{
+					"name": "Access Token generation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData= pm.response.json();\r",
+									"pm.test(\"Token Successfully Generated\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.environment.set(\"token\",jsonData.access_token);\r",
+									"pm.test(\"Token is : \" + jsonData.access_token);\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "{{client_id}}",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "{{client_secret}}",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "{{grant_type}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/oauth/issueToken",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"oauth",
+								"issueToken"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get Request",
+			"item": [
+				{
+					"name": "Employee Status Show",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData= pm.response.json();\r",
+									"pm.test(\"Employee Status Showed\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/employmentStatus",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"employmentStatus"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
